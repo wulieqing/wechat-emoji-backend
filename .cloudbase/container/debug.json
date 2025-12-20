@@ -24,14 +24,15 @@
       "envParams": {
         "MYSQL_USERNAME": "",
         "MYSQL_PASSWORD": "",
-        "MYSQL_ADDRESS": ""
+        "MYSQL_ADDRESS": "",
+        "MYSQL_DATABASE": "wechat_emojis"
       },
       "customLogs": "stdout",
       "initialDelaySeconds": 2,
-      "dataBaseName": "nodejs_demo",
+      "dataBaseName": "wechat_emojis",
       "executeSQLs": [
-        "CREATE DATABASE IF NOT EXISTS nodejs_demo;",
-        "USE nodejs_demo;"
+        "CREATE DATABASE IF NOT EXISTS wechat_emojis;",
+        "USE wechat_emojis;"
       ]
     }
   }

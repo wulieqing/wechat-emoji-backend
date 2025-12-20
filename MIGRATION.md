@@ -92,6 +92,7 @@ PORT=80
 MYSQL_USERNAME=your_username
 MYSQL_PASSWORD=your_password
 MYSQL_ADDRESS=host:port
+MYSQL_DATABASE=wechat_emojis
 
 # 微信配置
 WEIXIN_TOKEN=your_token
