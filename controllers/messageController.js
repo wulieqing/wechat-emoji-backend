@@ -14,16 +14,13 @@ class MessageController {
   async receiveMessage(req, res) {
     try {
       const { FromUserName, CreateTime } = req.body;
-      console.log('[MessageController] Message received:', {
-        FromUserName,
-        CreateTime,
-      });
+      console.log('[MessageController] Message received:', req.body);
 
       // 先立即返回 success 给微信服务器，避免超时
       res.send('success');
 
       // 后台异步触发爬虫，不阻塞主流程
-      setImmediate(() => {
+      setTimeout(() => {
         scraperService
           .handleScrapeTask(FromUserName, CreateTime)
           .catch((error) => {
@@ -32,7 +29,7 @@ class MessageController {
               FromUserName,
             });
           });
-      });
+      }, 0);
     } catch (error) {
       console.error('[MessageController] Failed to handle message:', {
         message: error.message,
