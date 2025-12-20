@@ -109,12 +109,104 @@ curl https://<云托管服务域名>/api/count
 curl -X POST -H 'content-type: application/json' -d '{"action": "inc"}' https://<云托管服务域名>/api/count
 ```
 
-## 使用注意
-如果不是通过微信云托管控制台部署模板代码，而是自行复制/下载模板代码后，手动新建一个服务并部署，需要在「服务设置」中补全以下环境变量，才可正常使用，否则会引发无法连接数据库，进而导致部署失败。
-- MYSQL_ADDRESS
-- MYSQL_PASSWORD
-- MYSQL_USERNAME
-以上三个变量的值请按实际情况填写。如果使用云托管内MySQL，可以在控制台MySQL页面获取相关信息。
+## 环境变量配置
+
+### 微信云托管环境变量配置（生产环境）
+
+**重要**：如果您使用微信云托管构建发布，环境变量需要在**微信云托管控制台**的「服务设置」中配置，而不是通过 `.env` 文件。
+
+#### 配置步骤
+
+1. **登录微信云托管控制台**
+   - 访问 [微信云托管控制台](https://cloud.weixin.qq.com/)
+   - 选择对应的环境和服务
+
+2. **进入服务设置**
+   - 在服务列表中，点击目标服务
+   - 进入「服务设置」页面
+   - 找到「环境变量」配置项
+
+3. **配置环境变量**
+   
+   可以通过以下两种方式配置：
+   
+   **方式一：键值对方式**
+   - 点击「添加环境变量」
+   - 分别输入环境变量的键（Key）和值（Value）
+   
+   **方式二：JSON 方式**
+   - 选择 JSON 格式输入
+   - 输入符合 JSON 格式的环境变量配置：
+   ```json
+   {
+     "MYSQL_USERNAME": "your_username",
+     "MYSQL_PASSWORD": "your_password",
+     "MYSQL_ADDRESS": "host:port",
+     "WEIXIN_TOKEN": "your_token",
+     "WEIXIN_COOKIE": "your_cookie",
+     "WEIXIN_FINGERPRINT": "your_fingerprint",
+     "WEIXIN_MINIPROGRAM_APPID": "your_appid",
+     "COS_BUCKET": "your_bucket",
+     "COS_REGION": "ap-beijing",
+     "LOG_FORMAT": "tiny",
+     "NODE_ENV": "production"
+   }
+   ```
+
+4. **保存并发布**
+   - 完成配置后，点击「保存」
+   - 新的环境变量将在下次发布时生效
+
+#### 必需的环境变量
+
+以下环境变量是应用正常运行所必需的，**必须**在控制台配置：
+
+| 环境变量 | 说明 | 获取方式 |
+|---------|------|---------|
+| `MYSQL_USERNAME` | MySQL 数据库用户名 | 在云托管控制台 MySQL 页面查看 |
+| `MYSQL_PASSWORD` | MySQL 数据库密码 | 在云托管控制台 MySQL 页面查看 |
+| `MYSQL_ADDRESS` | MySQL 数据库地址，格式：`host:port` | 在云托管控制台 MySQL 页面查看，例如：`mysql.example.com:3306` |
+
+#### 可选的环境变量
+
+以下环境变量有默认值，可根据业务需要配置：
+
+| 环境变量 | 说明 | 默认值 |
+|---------|------|--------|
+| `PORT` | 服务器监听端口 | `80` |
+| `WEIXIN_TOKEN` | 微信 Token | 空字符串 |
+| `WEIXIN_COOKIE` | 微信 Cookie | 空字符串 |
+| `WEIXIN_FINGERPRINT` | 微信 Fingerprint | 空字符串 |
+| `WEIXIN_REFERER` | 微信 Referer | 有默认值 |
+| `WEIXIN_MINIPROGRAM_APPID` | 小程序 AppID | 空字符串 |
+| `COS_BUCKET` | 腾讯云 COS 存储桶名称 | 空字符串 |
+| `COS_REGION` | 腾讯云 COS 地域（如：`ap-beijing`、`ap-shanghai`） | 空字符串 |
+| `LOG_FORMAT` | 日志格式（可选值：`combined`、`common`、`dev`、`short`、`tiny`） | `tiny` |
+| `NODE_ENV` | 运行环境（`development` 或 `production`） | `development` |
+
+#### 注意事项
+
+1. **环境变量生效时机**：修改环境变量后，需要重新发布服务才能生效
+2. **敏感信息保护**：环境变量中的敏感信息（如密码、Token）不会在代码中暴露
+3. **数据库信息获取**：如果使用云托管内 MySQL，可以在控制台 MySQL 页面获取 `MYSQL_USERNAME`、`MYSQL_PASSWORD`、`MYSQL_ADDRESS` 的值
+
+### 本地开发环境配置
+
+如果您需要在本地调试，可以使用 `.env` 文件：
+
+1. **复制环境变量模板文件**：
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **编辑 `.env` 文件**，填入实际的环境变量值（参考 `.env.example` 文件中的说明）
+
+3. **启动应用**：
+   ```bash
+   npm start
+   ```
+
+**注意**：`.env` 文件仅用于本地开发，不会被提交到代码仓库。生产环境的环境变量必须在微信云托管控制台配置。
 
 
 ## License

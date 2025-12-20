@@ -1,19 +1,27 @@
 {
-  "name": "wxcloudrun-express",
+  "name": "wechat-emoji-backend",
   "version": "1.0.0",
-  "description": "微信云托管 express 框架模版",
+  "description": "微信表情后端服务",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "axios": "^1.5.0",
     "cors": "^2.8.5",
+    "cos-nodejs-sdk-v5": "^2.15.4",
+    "dotenv": "^16.3.1",
     "express": "^4.16.4",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.2",
     "sequelize": "^6.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
   },
   "engines": {
     "node": ">=12.0.0"
