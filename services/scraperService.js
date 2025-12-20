@@ -72,7 +72,7 @@ class ScraperService {
       const data = await this.fetchLatest(params, cookie);
 
       if (!data || data.base_resp?.ret !== 0) {
-        console.error('[ScraperService] Invalid response or error ret code:', data.base_resp?.ret);
+        console.error('[ScraperService] Invalid response or error ret code:', data.base_resp);
         return null;
       }
 
