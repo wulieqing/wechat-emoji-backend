@@ -196,6 +196,8 @@ class ScraperService {
       // 获取最后一条消息
       const lastMsg = await this.fetchLastMessage(scrapeParams, cookie);
 
+      console.log('[ScraperService] Background fetch completed.', lastMsg);
+
       if (lastMsg) {
         // 构建消息对象
         const message = this.createMessage(lastMsg, token, fromUserName);
