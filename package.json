@@ -1,6 +1,6 @@
 {
   "name": "wechat-emoji-backend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "微信表情后端服务",
   "main": "index.js",
   "scripts": {
