@@ -166,7 +166,7 @@ curl -X POST -H 'content-type: application/json' -d '{"action": "inc"}' https://
 | `MYSQL_USERNAME` | MySQL 数据库用户名 | 在云托管控制台 MySQL 页面查看 |
 | `MYSQL_PASSWORD` | MySQL 数据库密码 | 在云托管控制台 MySQL 页面查看 |
 | `MYSQL_ADDRESS` | MySQL 数据库地址，格式：`host:port` | 在云托管控制台 MySQL 页面查看，例如：`mysql.example.com:3306` |
-| `MYSQL_DATABASE` | MySQL 数据库名称（默认：`wechat_emojis`） | 在云托管控制台 MySQL 页面查看，或与 `container.config.json` 中的 `dataBaseName` 保持一致 |
+| `MYSQL_DATABASE` | MySQL 数据库名称（默认：`nodejs_demo`） | 在云托管控制台 MySQL 页面查看，或与 `container.config.json` 中的 `dataBaseName` 保持一致 |
 
 #### 可选的环境变量
 

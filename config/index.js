@@ -13,8 +13,8 @@ module.exports = {
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
     address: process.env.MYSQL_ADDRESS || '',
-    // 支持通过环境变量 MYSQL_DATABASE 指定数据库名，若未设置则默认使用 wechat_emojis
-    database: process.env.MYSQL_DATABASE || 'wechat_emojis',
+    // 支持通过环境变量 MYSQL_DATABASE 指定数据库名，若未设置则默认使用 nodejs_demo
+    database: process.env.MYSQL_DATABASE || 'nodejs_demo',
     dialect: 'mysql',
   },
 
