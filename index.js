@@ -29,13 +29,13 @@ app.use(globalErrorHandler);
 async function bootstrap() {
   try {
     // 初始化数据库
-    await initDB();
+  await initDB();
 
     // 启动服务器
     const port = config.server.port;
-    app.listen(port, () => {
+  app.listen(port, () => {
       console.log(`[Bootstrap] Server started successfully on port ${port}`);
-    });
+  });
   } catch (error) {
     console.error('[Bootstrap] Failed to start application:', {
       message: error.message,

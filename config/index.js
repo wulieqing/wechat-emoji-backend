@@ -24,7 +24,7 @@ module.exports = {
     fingerprint: process.env.WEIXIN_FINGERPRINT || '',
     referer:
       process.env.WEIXIN_REFERER ||
-      'https://mp.weixin.qq.com/cgi-bin/message?t=message/list&count=20&day=7&token=28169727&lang=zh_CN',
+      'https://mp.weixin.qq.com/cgi-bin/message?t=message/list&count=20&day=7&token=308664156&lang=zh_CN',
     baseUrl: {
       singlesend: 'https://mp.weixin.qq.com/cgi-bin/singlesend',
       singlesendpage: 'https://mp.weixin.qq.com/cgi-bin/singlesendpage',
