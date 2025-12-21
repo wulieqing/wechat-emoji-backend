@@ -33,7 +33,12 @@ module.exports = {
     },
     miniprogram: {
       appid: process.env.WEIXIN_MINIPROGRAM_APPID || '',
-      pagepath: 'pages/emoji/index',
+      pagepath: 'pages/home/index',
+    },
+    // 公众号appid & secrect
+    officialAccount: {
+      appid: process.env.WEIXIN_OFFICIAL_ACCOUNT_APPID || '',
+      secret: process.env.WEIXIN_OFFICIAL_ACCOUNT_SECRET || '',
     },
   },
 
