@@ -24,4 +24,9 @@ router.get('/api/wx_openid', wxOpenIdController.getWxOpenId);
 router.get('/api/emoji/recommend_emojis', emojiController.getRecommendEmojis);
 router.get('/api/emoji/gallery', emojiController.getGallery);
 
+// 用户分享相关路由
+router.post('/api/emoji/share', emojiController.addShare);
+router.get('/api/emoji/share/remove', emojiController.removeShare);
+router.get('/api/emoji/share/status', emojiController.getShareStatus);
+
 module.exports = router;

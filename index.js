@@ -8,6 +8,7 @@ const config = require('./config');
 const routes = require('./config/routes');
 const { init: initDB } = require('./models');
 const { globalErrorHandler, notFoundHandler } = require('./utils/errorHandler');
+const shareService = require('./services/shareService');
 
 // 创建Express应用
 const app = express();
@@ -30,6 +31,9 @@ async function bootstrap() {
   try {
     // 初始化数据库
   await initDB();
+
+    // 启动分享服务清理任务
+  shareService.startCleanupSchedule();
 
     // 启动服务器
     const port = config.server.port;
