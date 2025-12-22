@@ -180,8 +180,8 @@ class WeixinService {
       });
 
       if (uploadResult && uploadResult.statusCode === 200) {
-        console.log('[WeixinService] COS upload successful:', `${bucket}/${fileName}`);
-        return `${bucket}/${fileName}`;
+        console.log('[WeixinService] COS upload successful:', fileName);
+        return fileName;
       } else {
         throw new Error('COS upload failed: invalid response');
       }

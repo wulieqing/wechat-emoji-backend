@@ -52,5 +52,9 @@ module.exports = {
     bucket: process.env.COS_BUCKET || '',
     region: process.env.COS_REGION || '',
   },
+  // 推荐emoji
+  recommendEmoji: process.env.RECOMMEND_EMOJIS || '',
+  // 图片库
+  gallery: process.env.GALLERY || '',
 };
 
