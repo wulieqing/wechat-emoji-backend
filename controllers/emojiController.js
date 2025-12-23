@@ -131,10 +131,11 @@ class EmojiController {
         });
       }
 
-      const result = await shareService.getShareStatus(fileId);
+      const exists = await shareService.getShareStatus(fileId);
+      console.log(`[EmojiController] Share status for fileId ${fileId}: ${exists}`);
       res.json({
         code: 0,
-        data: !!result,
+        data: exists,
       });
     } catch (error) {
       console.error('[EmojiController] Failed to get share status:', {

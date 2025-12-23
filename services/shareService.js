@@ -123,11 +123,11 @@ class ShareService {
       throw new Error('Invalid fileId');
     }
 
-    // fileId已经编码，直接使用
     const shares = await this.loadTodayShares();
-    const share = shares.find(s => s.fileId === fileId);
-    
-    return !!share;
+    // 检查是否已存在
+    const exists = shares.some(share => share.fileId === fileId);
+    console.log(`[ShareService] Share status for fileId ${fileId}: ${exists}`, shares);
+    return exists;
   }
 
   /**
