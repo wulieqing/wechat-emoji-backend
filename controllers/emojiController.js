@@ -131,8 +131,9 @@ class EmojiController {
         });
       }
 
-      const exists = await shareService.getShareStatus(fileId);
-      console.log(`[EmojiController] Share status for fileId ${fileId}: ${exists}`);
+      const encodedFileId = encodeURIComponent(fileId);
+      const exists = await shareService.getShareStatus(encodedFileId);  
+      console.log(`[EmojiController] Share status for fileId ${encodedFileId}: ${exists}`);
       res.json({
         code: 0,
         data: exists,
