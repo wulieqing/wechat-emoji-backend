@@ -82,9 +82,9 @@ class ShareService {
       return { success: true, message: 'Already shared today' };
     }
 
-    // 添加新分享
-    shares.push({
-      fileId: fileId,
+    // 添加新分享（放在队头，保存解码后的fileId）
+    shares.unshift({
+      fileId,
       timestamp: new Date().toISOString()
     });
 
@@ -127,7 +127,6 @@ class ShareService {
     const shares = await this.loadTodayShares();
     const share = shares.find(s => s.fileId === fileId);
     
-    // 只返回true/false
     return !!share;
   }
 
@@ -145,12 +144,14 @@ class ShareService {
     try {
       const files = await fs.readdir(this.shareDir);
       const today = this.getTodayDate();
+      console.log(`[ShareService] Cleaning up old share files, today is ${today}`);
       
       for (const file of files) {
         if (file.endsWith('.json')) {
           const fileDate = file.replace('.json', '');
           if (fileDate !== today) {
             const filePath = path.join(this.shareDir, file);
+            console.log(`[ShareService] Found old share file: ${fileDate}`);
             await fs.unlink(filePath);
             console.log(`[ShareService] Cleaned up old share file: ${file}`);
           }

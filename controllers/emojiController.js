@@ -27,7 +27,7 @@ class EmojiController {
       const userEmojis = userShares.map(share => share.originalFileId || share.fileId);
       
       // 合并数据，去重
-      const combinedEmojis = [...new Set([...configEmojis, ...userEmojis])];
+      const combinedEmojis = [...new Set([...userEmojis, ...configEmojis])];
       
       res.json({
         code: 0,
@@ -94,7 +94,7 @@ class EmojiController {
 
   async removeShare(req, res) {
     try {
-      const { fileId } = req.query;
+      const { fileId } = req.body;
       
       if (!fileId) {
         return res.status(400).json({
