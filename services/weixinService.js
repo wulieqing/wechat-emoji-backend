@@ -261,24 +261,34 @@ class WeixinService {
         type: msg.type,
       });
 
-      // 下载图片并上传到对象存储（使用流处理）
-      let imageStreamObj = null;
-      let location = '';
+      let messageContent;
       
-      try {
-        console.log('[WeixinService] Starting to download image from:', msg.download_url);
-        imageStreamObj = await this.downloadImage(msg);
-        console.log('[WeixinService] Image downloaded successfully, uploading to COS...');
-        location = await this.uploadToCos(imageStreamObj, msg.download_url);
-        console.log('[WeixinService] Image uploaded to COS:', location);
-      } catch (error) {
-        console.error('[WeixinService] Failed to process image:', error.message);
-        // 确保在错误时销毁流以避免内存泄漏
-        if (imageStreamObj?.stream && typeof imageStreamObj.stream.destroy === 'function') {
-          imageStreamObj.stream.destroy();
+      // 只有类型2和47的才需要处理图片
+      if (msg.type == 2 || msg.type == 47) {
+        // 下载图片并上传到对象存储（使用流处理）
+        let imageStreamObj = null;
+        let location = '';
+        
+        try {
+          console.log('[WeixinService] Starting to download image from:', msg.download_url);
+          imageStreamObj = await this.downloadImage(msg);
+          console.log('[WeixinService] Image downloaded successfully, uploading to COS...');
+          location = await this.uploadToCos(imageStreamObj, msg.download_url);
+          console.log('[WeixinService] Image uploaded to COS:', location);
+        } catch (error) {
+          console.error('[WeixinService] Failed to process image:', error.message);
+          // 确保在错误时销毁流以避免内存泄漏
+          if (imageStreamObj?.stream && typeof imageStreamObj.stream.destroy === 'function') {
+            imageStreamObj.stream.destroy();
+          }
+          // 图片处理失败时，仍然尝试发送消息（使用原始URL）
+          location = msg.download_url;
         }
-        // 图片处理失败时，仍然尝试发送消息（使用原始URL）
-        location = msg.download_url;
+
+        messageContent = `表情处理完成： <a data-miniprogram-appid="${miniprogram.appid}" data-miniprogram-path="${miniprogram.pagepath}?fileId=${encodeURIComponent(location)}">查看详情</a>`;
+      } else {
+        // 其他类型显示错误提示
+        messageContent = '抱歉，表情处理失败，请换个表情试试，或者您也可以： <a data-miniprogram-appid="wxf1ea09cf9d4180f3" data-miniprogram-path="pages/home/index">去首页看看</a>';
       }
 
       // 构建消息内容
@@ -289,14 +299,10 @@ class WeixinService {
       formData.append('lang', 'zh_CN');
       formData.append('f', 'json');
       formData.append('ajax', '1');
-      
-      const messageContent = `表情处理完成： <a data-miniprogram-appid="${miniprogram.appid}" data-miniprogram-path="${miniprogram.pagepath}?fileId=${encodeURIComponent(location)}">查看详情</a>`;
       formData.append('content', messageContent);
-
       if (fingerprint) {
         formData.append('fingerprint', fingerprint);
       }
-
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Referer: referer,

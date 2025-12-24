@@ -13,8 +13,25 @@ class MessageController {
    */
   async receiveMessage(req, res) {
     try {
-      const { FromUserName, CreateTime } = req.body;
+      const { ToUserName, FromUserName, CreateTime, MsgType, Event } = req.body;
       console.log('Message received:', req.body);
+
+      // 处理关注事件
+      if (MsgType === 'event' && Event === 'subscribe') {
+        console.log('Processing subscribe event for user:', FromUserName);
+        
+        // 直接返回欢迎消息
+        const welcomeMessage = {
+          ToUserName: FromUserName,
+          FromUserName: ToUserName,
+          CreateTime: Math.floor(Date.now() / 1000),
+          MsgType: 'text',
+          Content: '感谢您的关注！发送表情即可下载表情图片哦～'
+        };
+        
+        res.json(welcomeMessage);
+        return;
+      }
 
       // 先立即返回 success 给微信服务器，避免超时
       res.send('success');
